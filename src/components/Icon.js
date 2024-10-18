@@ -1,13 +1,17 @@
 import React from "react";
 
-export default function Icon({ name, size = 20, className = "" }) {
+export default function Symbol({
+  label,
+  dimension = 20,
+  additionalClasses = "",
+}) {
   return (
     <svg
-      className={`fill-current ${className}`}
-      width={size.toString() + "px"}
-      height={size.toString() + "px"}
+      className={`fill-current ${additionalClasses}`}
+      width={`${dimension}px`}
+      height={`${dimension}px`}
     >
-      <use xlinkHref={`/icons/solid.svg#${name}`} />
+      <use xlinkHref={`/icons/solid.svg#${label}`} />
     </svg>
   );
 }

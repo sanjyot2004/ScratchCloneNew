@@ -1,42 +1,60 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { moveSprite, rotateSprite, swapAnimations } from '../redux/spritesSlice';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  shiftSprite,
+  turnSprite,
+  exchangeAnimations,
+} from "../redux/spritesSlice";
 
 const ControlPanel = () => {
-    const dispatch = useDispatch();
-    const sprites = useSelector(state => state.sprites.sprites);
+  const dispatch = useDispatch();
+  const spriteList = useSelector((state) => state.sprites.sprites);
 
-    const handleMove = (id) => {
-        dispatch(moveSprite({ id, steps: 10 }));
-    };
+  const handleShift = (identifier) => {
+    dispatch(shiftSprite({ identifier, steps: 10 }));
+  };
 
-    const handleRotate = (id) => {
-        dispatch(rotateSprite({ id, degrees: 15 }));
-    };
+  const handleTurn = (identifier) => {
+    dispatch(turnSprite({ identifier, degrees: 15 }));
+  };
 
-    const handleSwapAnimations = () => {
-        if (sprites.length >= 2) {
-            dispatch(swapAnimations({ sprite1Id: sprites[0].id, sprite2Id: sprites[1].id }));
-        }
-    };
+  const handleExchangeAnimations = () => {
+    if (spriteList.length >= 2) {
+      dispatch(
+        exchangeAnimations({
+          sprite1Id: spriteList[0].id,
+          sprite2Id: spriteList[1].id,
+        })
+      );
+    }
+  };
 
-    return (
-        <div className="control-panel flex space-x-4">
-            {sprites.map(sprite => (
-                <div key={sprite.id}>
-                    <button onClick={() => handleMove(sprite.id)} className="bg-green-500 px-2 py-1">
-                        Move Sprite {sprite.id}
-                    </button>
-                    <button onClick={() => handleRotate(sprite.id)} className="bg-blue-500 px-2 py-1">
-                        Rotate Sprite {sprite.id}
-                    </button>
-                </div>
-            ))}
-            <button onClick={handleSwapAnimations} className="bg-red-500 px-2 py-1">
-                Swap Animations
-            </button>
+  return (
+    <div className="control-panel flex space-x-4">
+      {spriteList.map((sprite) => (
+        <div key={sprite.id}>
+          <button
+            onClick={() => handleShift(sprite.id)}
+            className="bg-green-500 px-2 py-1"
+          >
+            Shift Sprite {sprite.id}
+          </button>
+          <button
+            onClick={() => handleTurn(sprite.id)}
+            className="bg-blue-500 px-2 py-1"
+          >
+            Turn Sprite {sprite.id}
+          </button>
         </div>
-    );
+      ))}
+      <button
+        onClick={handleExchangeAnimations}
+        className="bg-red-500 px-2 py-1"
+      >
+        Exchange Animations
+      </button>
+    </div>
+  );
 };
 
 export default ControlPanel;

@@ -1,12 +1,12 @@
 import React from "react";
-import SpriteControls from "./SpriteControls";
-import SpriteScratch from "./SpriteScratch";
+import CharacterControls from "./SpriteControls";
+import CharacterPreview from "./SpriteScratch";
 
-export default function PreviewArea() {
+export default function DisplaySection() {
   return (
     <div className="flex flex-col h-full w-full p-2">
-      <SpriteScratch />
-      <SpriteControls />
+      <CharacterPreview />
+      <CharacterControls />
     </div>
   );
 }
