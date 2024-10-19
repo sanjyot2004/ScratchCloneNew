@@ -46,7 +46,7 @@ export default function Sidebar() {
                       item.text
                     )
                   }
-                  className={`flex flex-row ${bgColor} ${textColor} px-2 py-1 my-2 text-sm cursor-pointer`}
+                  className={`flex flex-row ${bgColor} ${textColor} px-2 py-1 my-2 rounded-3xl text-sm cursor-pointer`}
                 >
                   {item.text}
                 </div>

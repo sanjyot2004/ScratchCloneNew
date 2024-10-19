@@ -28,6 +28,11 @@ const spritesSlice = createSlice({
             state.selectedSpriteId = action.payload;
         },
 
+        removeSprite: (state, action) => {
+            // Filter out the sprite with the matching ID
+            state.sprites = state.sprites.filter(sprite => sprite.id !== action.payload);
+        },
+
         addActionToSprite: (state, action) => {
             const { spriteId, actionType, actionText, payload } = action.payload;
             const sprite = state.sprites.find((sprite) => sprite.id === spriteId);
@@ -105,6 +110,7 @@ const spritesSlice = createSlice({
 export const {
     addSprite,
     selectSprite,
+    removeSprite, // Export the remove action
     addActionToSprite,
     move,
     goTo,

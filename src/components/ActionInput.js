@@ -5,13 +5,13 @@ import { GO_TO, MOVE_STEPS, TURN_DEGREES } from '../constants/sidebarBlocks.js';
 
 const ActionInput = ({ action, index }) => {
     const dispatch = useDispatch();
-    const textSegments = action.text.split('__'); // Renamed 'parts' to 'textSegments'
-    const activeSpriteId = useSelector((state) => state.sprites.selectedSpriteId); // Renamed 'selectedSpriteId' to 'activeSpriteId'
+    const textSegments = action.text.split('__'); 
+    const activeSpriteId = useSelector((state) => state.sprites.selectedSpriteId); 
     const activeSprite = useSelector((state) => 
         state.sprites.sprites.find(sprite => sprite.id === activeSpriteId)
-    ); // Renamed 'selectedSprite' to 'activeSprite'
+    ); 
     
-    const spriteCurrentAction = activeSprite.actions[index]; // Renamed 'spriteAction' to 'spriteCurrentAction'
+    const spriteCurrentAction = activeSprite.actions[index]; 
 
     const determineInputHandlers = () => {
         switch (action.type) {
@@ -29,10 +29,10 @@ const ActionInput = ({ action, index }) => {
         }
     };
 
-    const inputHandlers = determineInputHandlers(); // Renamed 'inputCallbacks' to 'inputHandlers'
+    const inputHandlers = determineInputHandlers();
 
     return (
-        <div>{textSegments.map((segment, segmentIndex) => ( // Renamed 'part' and 'partIndex' to 'segment' and 'segmentIndex'
+        <div>{textSegments.map((segment, segmentIndex) => ( 
             <React.Fragment key={segmentIndex}>
                 {segment}
                 {segmentIndex < textSegments.length - 1 && inputHandlers[segmentIndex] && (
@@ -45,7 +45,7 @@ const ActionInput = ({ action, index }) => {
                                     action.type === GO_TO ? (segmentIndex === 0 ? spriteCurrentAction.payload.x : spriteCurrentAction.payload.y) :
                                         ''
                         }
-                        onChange={(e) => inputHandlers[segmentIndex](e.target.valueAsNumber)} // Used 'segmentIndex' instead of 'partIndex'
+                        onChange={(e) => inputHandlers[segmentIndex](e.target.valueAsNumber)} 
                     />
                 )}
             </React.Fragment>

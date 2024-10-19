@@ -13,6 +13,7 @@ export default function SpriteScratch() {
     const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
     const [draggingSprite, setDraggingSprite] = useState(null);
     const containerRef = useRef(null);
+
     const executeAction = ({ spriteId, type, payload }) => {
         const actionMap = {
             [MOVE_STEPS]: () => dispatch(move({ spriteId, ...payload })),
@@ -52,23 +53,27 @@ export default function SpriteScratch() {
 
         executeNextAction();
     };
+
     const play = () => {
         sprites.forEach((sprite) => {
             playForSprite(sprite.id);
         });
     };
+
     const clearTimeouts = () => {
         Object.keys(timeoutRefs.current).forEach(spriteId => {
             clearTimeout(timeoutRefs.current[spriteId]);
         });
     }
+
     useEffect(() => {
         if (spritesState.collisionHandled) {
-            clearTimeouts()
+            clearTimeouts();
             play();
             dispatch(resetCollisionHandled());
         }
-    }, [spritesState.collisionHandled])
+    }, [spritesState.collisionHandled]);
+
     useEffect(() => {
         if (!containerRef.current) return;
 
@@ -83,13 +88,14 @@ export default function SpriteScratch() {
         resizeObserver.observe(containerRef.current);
         return () => {
             resizeObserver.disconnect();
-            clearTimeouts()
+            clearTimeouts();
         };
     }, []);
 
     const handleDragStart = useCallback((spriteId) => {
         setDraggingSprite(spriteId);
     }, []);
+
     const handleDragOver = useCallback((e) => {
         e.preventDefault();
     }, []);
@@ -102,16 +108,26 @@ export default function SpriteScratch() {
         const centerX = containerRect.width / 2;
         const centerY = containerRect.height / 2;
 
+        // Calculate the new position based on the mouse drop location
         const newX = e.clientX - containerRect.left - centerX;
         const newY = centerY - (e.clientY - containerRect.top);
 
+        // Constrain the position within the container boundaries
+        const sprite = sprites.find(sprite => sprite.id === draggingSprite);
+        const spriteWidth = 50; // Replace with actual sprite width
+        const spriteHeight = 50; // Replace with actual sprite height
+
+        const constrainedX = Math.max(-containerSize.width / 2, Math.min(newX, containerSize.width / 2 - spriteWidth));
+        const constrainedY = Math.max(-containerSize.height / 2, Math.min(newY, containerSize.height / 2 - spriteHeight));
+
         dispatch(goTo({
             spriteId: draggingSprite,
-            x: newX, y: newY
+            x: constrainedX, y: constrainedY
         }));
 
         setDraggingSprite(null);
-    }, [dispatch, draggingSprite, containerRef]);
+    }, [dispatch, draggingSprite, containerSize, sprites]);
+
     return (
         <div className="stage-area overflow-hidden relative bg-white border-2 border-gray-200" style={{ flex: 0.8 }} ref={containerRef} onDragOver={handleDragOver}
             onDrop={handleDrop}>

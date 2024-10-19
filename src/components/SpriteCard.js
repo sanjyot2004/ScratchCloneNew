@@ -1,6 +1,7 @@
-import { SpriteImage } from "./Sprite";
+import { SpriteImage } from "./Sprite"; // Adjust the import based on your file structure
 import React from "react";
-const SpriteCard = ({ spriteName, onClick, selected }) => {
+
+const SpriteCard = ({ spriteName, onClick, onDelete, selected }) => {
     return (
         <div
             className={`border-2 rounded-lg p-4 flex flex-col items-center justify-center cursor-pointer hover:shadow-md transition-all
@@ -9,6 +10,7 @@ const SpriteCard = ({ spriteName, onClick, selected }) => {
         >
             <SpriteImage spriteName={spriteName} styles={{ width: "60px", height: "60px" }} />
             <p className="text-sm font-semibold mt-2">{spriteName}</p>
+           
         </div>
     );
 };

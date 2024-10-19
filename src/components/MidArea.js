@@ -37,7 +37,7 @@ const MidArea = () => {
 
   return (
     <div
-      className="flex-1 h-full overflow-auto bg-gray-100 p-6"
+      className="flex-1 h-64 w-full overflow-auto bg-gray-100 p-6"
       onDrop={handleDrop}
       onDragOver={handleDragOver}
     >

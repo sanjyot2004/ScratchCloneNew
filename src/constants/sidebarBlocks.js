@@ -4,6 +4,7 @@ import React from 'react';
 export const motionColor = {
     bgColor: "bg-yellow-500",
     textColor: "text-white",
+
 };
 
 export const controlColor = {
